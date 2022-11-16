@@ -6,7 +6,7 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule)
 
   const config = new DocumentBuilder()
-    .setTitle('Title')
+    .setTitle('Big Name ')
     .setDescription('API description')
     .setVersion('1.0')
     .addTag('encode bootcamp')
