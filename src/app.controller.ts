@@ -10,15 +10,20 @@ export class AppController {
     return this.appService.getHello()
   }
 
+  @Get('total-supply')
+  getTotalSupply(): Promise<number> {
+    return this.appService.getTotalSupply()
+  }
 
-
-
-  // The real code starts here
-@Get('get-proposals')
-getProposals(): string[] {
+  @Get('get-proposals')
+  getProposals(): Promise<string[]> {
   return this.appService.getProposals()
-}
+  }
+
+  @Get('user-balance/:address')
+  getUserBalance(@Param('address') address: string): Promise<number> {
+    return this.appService.getUserBalance(address)
+  }
 
 
-  // The end of real code
 }
