@@ -18,21 +18,27 @@ export class AppService {
   provider: ethers.providers.BaseProvider
   erc20ContractFactory
 
-  paymentOrders: PaymentOrder[]
+
 
   constructor() {
     this.provider = ethers.getDefaultProvider('goerli')
     this.erc20ContractFactory = new ethers.ContractFactory(tokenJson.abi, tokenJson.bytecode)
-    this.paymentOrders = []
+   
   }
 
   getHello(): string {
-    return 'Hello Jan and World!'
+    return 'This API will be FIRE!!!!!'
   }
 
-  getBlock(blockNumberOrTag = 'latest') {
-    return this.provider.getBlock(blockNumberOrTag)
-  }
+// Homework code
+
+getProposals(): string[] {
+  return ["NOT IMPLEMENTED"];
+   
+}
+
+// END of homework code
+
 
   async getTotalSupply(address: string): Promise<number> {
     const contractInstance = this.erc20ContractFactory.attach(address).connect(this.provider)
@@ -40,16 +46,7 @@ export class AppService {
     return parseFloat(ethers.utils.formatEther(totalSupply))
   }
 
-  getPaymentOrder(id: number) {
-    return { value: this.paymentOrders[id].value, id: this.paymentOrders[id].id }
-  }
 
-  createPaymentOrder(value: number, secret: string) {
-    const newOrder = new PaymentOrder()
-    newOrder.value = value
-    newOrder.secret = secret
-    newOrder.id = this.paymentOrders.length
-    this.paymentOrders.push(newOrder)
-    return newOrder.id
-  }
+
+
 }
