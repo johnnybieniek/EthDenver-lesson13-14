@@ -1,5 +1,5 @@
 import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common'
-import { AppService, CreatePaymentOrderDto, PaymentOrder } from './app.service'
+import { AppService } from './app.service'
 
 @Controller()
 export class AppController {
@@ -17,7 +17,7 @@ export class AppController {
 
   @Get('get-proposals')
   getProposals(): Promise<string[]> {
-  return this.appService.getProposals()
+    return this.appService.getProposals()
   }
 
   @Get('user-balance/:address')
@@ -25,5 +25,18 @@ export class AppController {
     return this.appService.getUserBalance(address)
   }
 
+  @Get('winning-proposal')
+  getWinningProposal(): Promise<string> {
+    return this.appService.getWinningProposal()
+  }
 
+  @Get('get-proposal-votes/:id')
+  getProposalVotes(@Param('id') id: number): Promise<number> {
+    return this.appService.getProposalVotes(id)
+  }
+
+  @Get('user-voting-power/:address')
+  getUserVotingPower(@Param('address') address: string): Promise<number> {
+    return this.appService.getUserVotingPower(address)
+  }
 }
