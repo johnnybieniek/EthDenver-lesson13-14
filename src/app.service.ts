@@ -1,10 +1,12 @@
 import { Injectable, ParseFloatPipe } from '@nestjs/common'
 import { ethers } from 'ethers'
-import * as tokenJson from './assets/MyERC20.json'
+import * as tokenJson from './assets/MyToken.json'
 import * as tokenizedBallotJson from './assets/tokenizedBallot.json'
 
 const tokenContractAddress = '0xC40ae31250AC7224b3Bc2D036c476D25e9fD16a1' // address of our ERC20 token contract on Goerli
 const ballotContractAddress = '0x915575a26a0013D05246ccad3282dF205BEa36Dd' // address of the tokenized Ballot contract on Goerli
+
+const MINT_AMOUNT = ethers.utils.parseEther('1')
 
 @Injectable()
 export class AppService {
@@ -70,5 +72,22 @@ export class AppService {
   async getUserVotingPower(address: string): Promise<number> {
     const votingPower = await this.ballotContract.votingPower(address)
     return parseInt(votingPower)
+  }
+
+  async getAllVotes(): Promise<number[]> {
+    const NUM_PROPOSALS = 3
+    let votesArray: number[] = []
+    for (let i = 0; i < NUM_PROPOSALS; i++) {
+      const votesBig = (await this.ballotContract.proposals(i)).voteCount
+      const votes = parseInt(votesBig)
+      votesArray.push(votes)
+    }
+    return votesArray
+  }
+
+  async mintTokens(address: string): Promise<string> {
+    const mintTx = await this.tokenContract.mint(address, MINT_AMOUNT)
+    await mintTx.wait(1)
+    return 'THE TRANSACTION WAS SUCCESSFUL'
   }
 }

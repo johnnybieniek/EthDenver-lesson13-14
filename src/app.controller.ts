@@ -39,4 +39,14 @@ export class AppController {
   getUserVotingPower(@Param('address') address: string): Promise<number> {
     return this.appService.getUserVotingPower(address)
   }
+
+  @Get('get-all-votes')
+  getAllVotes(): Promise<number[]> {
+    return this.appService.getAllVotes()
+  }
+
+  @Get('mint-tokens/:address')
+  mintTokens(@Param('address') address: string): Promise<string> {
+    return this.appService.mintTokens(address)
+  }
 }
