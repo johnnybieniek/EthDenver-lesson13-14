@@ -16,7 +16,7 @@ export class AppController {
   }
 
   @Get('get-proposals')
-  getProposals(): Promise<string[]> {
+  getProposals() {
     return this.appService.getProposals()
   }
 

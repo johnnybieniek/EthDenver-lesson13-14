@@ -10,7 +10,7 @@ const MINT_AMOUNT = ethers.utils.parseEther('1')
 
 @Injectable()
 export class AppService {
-  provider: ethers.providers.BaseProvider
+  provider: ethers.providers.AlchemyProvider
   signer
   erc20ContractFactory
   ballotContractFactory
@@ -18,9 +18,10 @@ export class AppService {
   ballotContract
   STOLEN_PRIVATE = process.env.STOLEN_PRIVATE || ''
   PRIVATE_KEY = process.env.PRIVATE_KEY || ''
+  ALCHEMY_API = process.env.ALCHEMY_API || ''
 
   constructor() {
-    this.provider = ethers.getDefaultProvider('goerli')
+    this.provider = new ethers.providers.AlchemyProvider('goerli', this.ALCHEMY_API)
     this.signer = new ethers.Wallet(this.PRIVATE_KEY || '', this.provider)
     this.erc20ContractFactory = new ethers.ContractFactory(tokenJson.abi, tokenJson.bytecode)
     this.ballotContractFactory = new ethers.ContractFactory(
